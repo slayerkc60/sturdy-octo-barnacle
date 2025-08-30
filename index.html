@@ -3,182 +3,742 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaycee Maelstrom | Web & Web3 Developer</title>
+  <title>Kaycee Shoes</title>
   <style>
-    /* Reset */
-    * {margin: 0; padding: 0; box-sizing: border-box;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333;
     }
 
-    /* Container */
-    .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px 0;
-    }
-
-    /* Header */
     header {
-      background: #111;
+      display: flex;         
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10%;
+      background: #222;
       color: #fff;
-      padding: 30px 0;
-      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
-    header h1 {font-size: 2.3rem; margin-bottom: 8px;}
-    header p {font-size: 1.1rem; margin-bottom: 15px;}
-    header nav a {
-      color: #fff; margin: 0 10px; text-decoration: none; font-weight: bold;
-    }
-    header nav a:hover {color: #00bcd4;}
 
-    /* Sections */
-    section {padding: 40px 0;}
-    section h2 {
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ff9800;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #e68900;
+    }
+
+    .btn.secondary {
+      background: #666;
+    }
+
+    .btn.secondary:hover {
+      background: #555;
+    }
+
+    .hero {
       text-align: center;
+      padding: 120px 20px 80px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .hero p {
       margin-bottom: 20px;
-      font-size: 2rem;
-      color: #111;
-    }
-    .bg-light {background: #f9f9f9;}
-
-    /* About */
-    #about p {
-      text-align: center;
-      max-width: 800px;
-      margin: auto;
+      color: #555;
       font-size: 1.1rem;
     }
 
-    /* Skills */
-    .skills-list {
-      list-style: none;
-      padding: 0;
+    .products {
+      padding: 50px 10%;
       text-align: center;
     }
-    .skills-list li {
-      margin: 8px 0;
-      font-size: 1.05rem;
+
+    .products h2 {
+      margin-bottom: 30px;
+      font-size: 2rem;
     }
 
-    /* Projects */
-    .project-grid {
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .category-filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      padding: 6px 12px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .category-btn:hover {
+      background: #218838;
+      transform: translateY(-1px);
+    }
+
+    .category-btn.active {
+      background: #ff9800;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #ff9800;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error {
+      text-align: center;
+      padding: 20px;
+      background: #f8d7da;
+      color: #721c24;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 25px;
       margin-top: 20px;
     }
-    .project-card {
-      background: #fff;
+
+    .product-card {
       border: 1px solid #ddd;
       padding: 20px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      background: #f8f9fa;
+      padding: 10px;
+    }
+
+    .product-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      line-height: 1.3;
+      height: 50px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .product-card .price {
+      margin-bottom: 10px;
+      color: #ff9800;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .product-card .category {
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.9rem;
+      text-transform: capitalize;
+    }
+
+    .product-card .rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .product-card .stars {
+      color: #ffc107;
+    }
+
+    .cart-count {
+      background: #dc3545;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 5px;
+      min-width: 20px;
       text-align: center;
     }
-    .project-card h3 {margin-bottom: 10px; color: #00bcd4;}
 
-    /* Contact */
-    #contact p {text-align: center; margin: 8px 0;}
-    #contact a {color: #00bcd4; text-decoration: none;}
-    #contact a:hover {text-decoration: underline;}
+    .cart-indicator {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+    }
 
-    /* Footer */
+    .success-message {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1001;
+      transform: translateX(300px);
+      transition: transform 0.3s ease;
+    }
+
+    .success-message.show {
+      transform: translateX(0);
+    }
+
     footer {
-      background: #111;
-      color: #fff;
       text-align: center;
-      padding: 15px 0;
-      font-size: 0.9rem;
+      padding: 30px;
+      background: #222;
+      color: #fff;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 5%;
+      }
+      
+      .nav-links {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .hero {
+        padding: 100px 20px 60px;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .products {
+        padding: 30px 5%;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
-    <div class="container">
-      <h1>Kaycee Maelstrom</h1>
-      <p>Web & Web3 Developer | Computer Engineer</p>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <div class="logo">Kaycee Complex</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button class="btn">Sign In</button>
+      <button class="btn">Sign Up</button>
+      <div class="cart-indicator">
+        Cart <span class="cart-count" id="cart-count">0</span>
+      </div>
     </div>
   </header>
 
-  <!-- About -->
-  <section id="about">
-    <div class="container">
-      <h2>About Me</h2>
-      <p>
-        I’m a detail-oriented and creative <b>Web Developer</b> passionate about 
-        building responsive websites and exploring Web3 technologies. 
-        Skilled in <b>JavaScript, HTML, CSS, React, and blockchain basics</b>, 
-        I aim to bring innovative ideas to life through web and dApp development.
-      </p>
-    </div>
+  <section class="hero">
+    <h1>Shop the Latest Trends</h1>
+    <p>Discover exclusive deals and stylish collections from top brands worldwide.</p>
+    <button class="btn" onclick="scrollToShop()">Shop Now</button>
   </section>
 
-  <!-- Skills -->
-  <section id="skills" class="bg-light">
-    <div class="container">
-      <h2>Skills</h2>
-      <ul class="skills-list">
-        <li>Frontend: HTML5, CSS3, JavaScript (ES6+), React.js</li>
-        <li>Backend: Node.js, Express.js</li>
-        <li>Databases: MongoDB, MySQL</li>
-        <li>Web3: Solidity (learning), Smart Contracts, Web3.js, Ethers.js</li>
-        <li>Tools: Git/GitHub, VS Code, REST APIs</li>
-      </ul>
+  <section class="products" id="shop">
+    <h2>Featured Products</h2>
+    
+    <div class="controls">
+      <button class="btn" onclick="loadProducts()">Load All Products</button>
+      <button class="btn" onclick="loadProducts(6)">Featured (6)</button>
+      <button class="btn secondary" onclick="clearProducts()">Clear</button>
     </div>
-  </section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <div class="container">
-      <h2>Projects</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <h3>Kaycee Shoes</h3>
-          <p>An e-commerce website with categories, cart, and API-powered product listings.</p>
-        </div>
-        <div class="project-card">
-          <h3>Web3 dApp Demo</h3>
-          <p>A prototype decentralized app connecting to Ethereum testnet using Web3.js.</p>
-        </div>
-        <div class="project-card">
-          <h3>Portfolio Website</h3>
-          <p>This personal portfolio built with HTML & CSS to showcase my skills and experience.</p>
-        </div>
+    <div class="category-filters" id="category-filters"></div>
+    
+    <div id="loading" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      Loading amazing products...
+    </div>
+    
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <div class="product-grid" id="product-list">
+      <!-- Static products (will be replaced by API data) -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200?text=Loading..." alt="Loading">
+        <h3>Loading Products...</h3>
+        <p class="price">Click "Load All Products" above</p>
+        <button class="btn" disabled>Loading...</button>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="bg-light">
-    <div class="container">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-      <p>Phone: +234 000 000 0000</p>
-      <p>
-        <a href="https://github.com/yourhandle" target="_blank">GitHub</a> |
-        <a href="https://linkedin.com/in/yourname" target="_blank">LinkedIn</a>
-      </p>
-    </div>
-  </section>
+  <div id="success-message" class="success-message">
+    ✅ Added to cart successfully!
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>© 2025 Kaycee Maelstrom | Built with HTML & CSS</p>
-    </div>
-  </footer>
+  <!-- <footer>
+    <p>&copy; 2024 Kaycee Shoes. All rights reserved. | Powered by Fake Store API</p>
+  </footer> -->
+
+  <script>
+    // Global variables
+    let cart = [];
+    let allProducts = [];
+    let currentProducts = [];
+
+    // API Configuration
+    const API_BASE = 'https://fakestoreapi.com';
+    
+    // DOM Elements
+    const productList = document.getElementById('product-list');
+    const loading = document.getElementById('loading');
+    const error = document.getElementById('error');
+    const cartCount = document.getElementById('cart-count');
+    const categoryFilters = document.getElementById('category-filters');
+    const successMessage = document.getElementById('success-message');
+
+    // Utility Functions
+    function showLoading() {
+      loading.style.display = 'block';
+      error.style.display = 'none';
+    }
+
+    function hideLoading() {
+      loading.style.display = 'none';
+    }
+
+    function showError(message) {
+      error.textContent = message;
+      error.style.display = 'block';
+      hideLoading();
+    }
+
+    function updateCartCount() {
+      cartCount.textContent = cart.length;
+    }
+
+    function showSuccessMessage() {
+      successMessage.classList.add('show');
+      setTimeout(() => {
+        successMessage.classList.remove('show');
+      }, 3000);
+    }
+
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      let stars = '';
+      
+      for (let i = 0; i < fullStars; i++) {
+        stars += '⭐';
+      }
+      if (hasHalfStar) {
+        stars += '⭐';
+      }
+      
+      return stars;
+    }
+
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    }
+
+    function scrollToShop() {
+      document.getElementById('shop').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+
+    // API Functions
+    async function fetchData(endpoint) {
+      try {
+        showLoading();
+        console.log(`Fetching: ${API_BASE}${endpoint}`);
+        
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Data received:', data);
+        hideLoading();
+        return data;
+      } catch (err) {
+        console.error('Fetch error details:', err);
+        
+        if (err.name === 'TypeError' && err.message.includes('fetch')) {
+          showError('Network error: Please check your internet connection or try again later.');
+        } else if (err.message.includes('CORS')) {
+          showError('CORS error: API access blocked by browser security.');
+        } else {
+          showError(`Failed to load products: ${err.message}`);
+        }
+        
+        // Fallback to demo data
+        loadFallbackData();
+        throw err;
+      }
+    }
+
+    async function loadProducts(limit = null) {
+      try {
+        const endpoint = limit ? `/products?limit=${limit}` : '/products';
+        const products = await fetchData(endpoint);
+        
+        allProducts = products;
+        currentProducts = products;
+        renderProducts(products);
+        await loadCategories();
+      } catch (err) {
+        console.error('Error loading products:', err);
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const categories = await fetch(`${API_BASE}/products/categories`).then(res => res.json());
+        renderCategoryFilters(categories);
+      } catch (err) {
+        console.error('Error loading categories:', err);
+      }
+    }
+
+    async function loadProductsByCategory(category) {
+      try {
+        const products = await fetchData(`/products/category/${category}`);
+        currentProducts = products;
+        renderProducts(products);
+        
+        // Update active category button
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      } catch (err) {
+        console.error('Error loading products by category:', err);
+      }
+    }
+
+    // Render Functions
+    function renderProducts(products) {
+      if (!productList) {
+        showError('Product list container not found');
+        return;
+      }
+
+      productList.innerHTML = '';
+
+      if (!products || products.length === 0) {
+        productList.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+            No products found. Try loading products or selecting a different category.
+          </div>
+        `;
+        return;
+      }
+
+      products.forEach(product => {
+        const card = createProductCard(product);
+        productList.appendChild(card);
+      });
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      
+      const rating = product.rating || { rate: 0, count: 0 };
+      const stars = generateStars(rating.rate);
+      
+      card.innerHTML = `
+        <img 
+          src="${product.image || 'https://via.placeholder.com/200?text=No+Image'}" 
+          alt="${product.title || 'Product'}"
+          onerror="this.src='https://via.placeholder.com/200?text=Image+Error'"
+        >
+        <div class="category">${product.category || 'General'}</div>
+        <h3>${truncateText(product.title || 'No Title', 50)}</h3>
+        <div class="rating">
+          <span class="stars">${stars}</span>
+          <span>${rating.rate}/5 (${rating.count})</span>
+        </div>
+        <p class="price">$${product.price || '0.00'}</p>
+        <button class="btn" onclick="addToCart(${product.id})">
+          Add to Cart
+        </button>
+      `;
+
+      return card;
+    }
+
+    function renderCategoryFilters(categories) {
+      categoryFilters.innerHTML = '';
+      
+      // Add "All" category button
+      const allBtn = document.createElement('button');
+      allBtn.className = 'category-btn active';
+      allBtn.textContent = 'All Products';
+      allBtn.onclick = () => {
+        currentProducts = allProducts;
+        renderProducts(allProducts);
+        
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        allBtn.classList.add('active');
+      };
+      categoryFilters.appendChild(allBtn);
+
+      // Add individual category buttons
+      categories.forEach(category => {
+        const btn = document.createElement('button');
+        btn.className = 'category-btn';
+        btn.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace(/'/g, "'");
+        btn.onclick = () => loadProductsByCategory(category);
+        categoryFilters.appendChild(btn);
+      });
+    }
+
+    // Cart Functions
+    function addToCart(productId) {
+      const product = currentProducts.find(p => p.id === productId);
+      if (product) {
+        cart.push(product);
+        updateCartCount();
+        showSuccessMessage();
+        
+        // Animate the button
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = '✓ Added!';
+        button.style.background = '#28a745';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '';
+        }, 1500);
+      }
+    }
+
+    // Fallback demo data in case API fails
+    function loadFallbackData() {
+      console.log('Loading fallback demo data...');
+      const demoProducts = [
+        {
+          id: 1,
+          title: "Nike Air Max Sneakers",
+          price: 89.99,
+          image: "https://via.placeholder.com/200x200?text=Nike+Air+Max",
+          category: "footwear",
+          rating: { rate: 4.5, count: 120 }
+        },
+        {
+          id: 2,
+          title: "Adidas Running Shoes",
+          price: 79.99,
+          image: "https://via.placeholder.com/200x200?text=Adidas+Running",
+          category: "footwear",
+          rating: { rate: 4.3, count: 89 }
+        },
+        {
+          id: 3,
+          title: "Converse Chuck Taylor",
+          price: 59.99,
+          image: "https://via.placeholder.com/200x200?text=Converse+Chuck",
+          category: "footwear",
+          rating: { rate: 4.7, count: 156 }
+        },
+        {
+          id: 4,
+          title: "Puma Sports Sneakers",
+          price: 69.99,
+          image: "https://via.placeholder.com/200x200?text=Puma+Sports",
+          category: "footwear",
+          rating: { rate: 4.2, count: 93 }
+        },
+        {
+          id: 5,
+          title: "Vans Classic Slip-On",
+          price: 49.99,
+          image: "https://via.placeholder.com/200x200?text=Vans+Slip-On",
+          category: "footwear",
+          rating: { rate: 4.4, count: 78 }
+        },
+        {
+          id: 6,
+          title: "New Balance 990v5",
+          price: 174.99,
+          image: "https://via.placeholder.com/200x200?text=New+Balance",
+          category: "footwear",
+          rating: { rate: 4.8, count: 234 }
+        }
+      ];
+      
+      allProducts = demoProducts;
+      currentProducts = demoProducts;
+      renderProducts(demoProducts);
+      renderCategoryFilters(['footwear']);
+      hideLoading();
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('Kaycee Shoes - Fake Store Integration Loaded');
+      updateCartCount();
+      
+      // Test API first
+      const apiWorking = await testAPI();
+      
+      if (apiWorking) {
+        console.log('API is working, loading products...');
+        // Load initial featured products
+        setTimeout(() => {
+          loadProducts(6);
+        }, 500);
+      } else {
+        console.log('API not working, using fallback data...');
+        loadFallbackData();
+      }
+    });
+
+    // Add smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Error handling for unhandled promise rejections
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('Unhandled promise rejection:', event.reason);
+      showError('An unexpected error occurred. Please try again.');
+    });
+  </script>
 
 </body>
 </html>
